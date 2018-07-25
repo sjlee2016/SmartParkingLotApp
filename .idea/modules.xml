@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/FirebaseLoginApp-66e69022bed7e7aab5b531f69cde252dafd5181c.iml" filepath="$PROJECT_DIR$/FirebaseLoginApp-66e69022bed7e7aab5b531f69cde252dafd5181c.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+    </modules>
+  </component>
+</project>

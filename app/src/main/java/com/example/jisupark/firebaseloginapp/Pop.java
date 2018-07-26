@@ -5,46 +5,57 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
 class Pop extends Activity {
-    int buttonNum=0;
-    Boolean empty=false;
 
-    Pop(int num, Boolean emp)
-    {
-        buttonNum = num;
-        empty = emp;
-
-    }
-
+    String btn;
+    TextView userNameText;
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        if(!empty) {
+
             setContentView(R.layout.popupwindow);
             DisplayMetrics dm = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(dm);
             int width = dm.widthPixels;
             int height = dm.heightPixels;
             getWindow().setLayout((int) (width * .8), (int) (height * .6));
-            //DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("ParkingLot" + "/" + buttonNum + "/license");
 
-           // TextView licenseText = (TextView)  findViewById(R.id.LicenseText);
+        TextView licenseText = (TextView)  findViewById(R.id.LicenseText);
+        userNameText = (TextView) findViewById(R.id.userText);
+
+        btn = getIntent().getExtras().getString("licenseNumber");
+
+       licenseText.setText("license # : " + btn);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("CarLicense_list" + "/" + btn + "/name");
+
+        ValueEventListener valueEventListener = myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                userNameText.setText("Username : " + snapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        // TextView licenseText = (TextView)  findViewById(R.id.LicenseText);
            // TextView userNameText = (TextView) findViewById(R.id.userText);
 
             //licenseText.setText("hello");
             //mRef = FirebaseDatabase.getInstance().getReference("ParkingLot" + "/" + buttonNum + "/user");
             //userNameText.setText("hi");
 
-        }
-
-    }
-    void display()
-    {
 
     }
 }

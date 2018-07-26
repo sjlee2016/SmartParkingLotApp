@@ -28,16 +28,18 @@ import static android.graphics.Color.rgb;
 public class ParkingLotActivity extends AppCompatActivity{
     Button[] carButton = new Button[6];
     Boolean[] emptyList = new Boolean[6];
+    String[] values = new String[6];
+
     public static final String TAG = ParkingLotActivity.class.getSimpleName();
 
     void check() {
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference("ParkingLot");
+        DatabaseReference myRef = database.getReference("ParkingLot");
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 String value = null;
                 int v = 0;
                 int i = 0;
@@ -51,11 +53,14 @@ public class ParkingLotActivity extends AppCompatActivity{
 
                         carButton[i].setBackgroundColor(rgb(38, 174, 144));
                         emptyList[i] = true;
+                        values[i] = value;
+
                     }else
                     {
 
                         emptyList[i] = false;
                         carButton[i].setBackgroundColor(rgb(255, 104, 97));
+                        values[i]=value;
                     }
 
                     /*
@@ -111,10 +116,12 @@ public class ParkingLotActivity extends AppCompatActivity{
 
         carButton[0].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(!emptyList[0]) {
-                    Pop popUpWindow = new Pop(0, emptyList[0]);
-                    startActivity(new Intent(ParkingLotActivity.this, Pop.class));
-                    popUpWindow.display();
+                if(!emptyList[0])
+                {
+                    Intent intent = new Intent(ParkingLotActivity.this, Pop.class);
+                    intent.putExtra("licenseNumber", values[0]);
+
+                    startActivity(intent);
                 }
 
             }
@@ -123,33 +130,47 @@ public class ParkingLotActivity extends AppCompatActivity{
 
         carButton[1].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 if(!emptyList[1]) {
-                    Pop popUpWindow = new Pop(1, emptyList[1]);
-                    startActivity(new Intent(ParkingLotActivity.this, Pop.class));
+                    Intent intent = new Intent(ParkingLotActivity.this, Pop.class);
+                    intent.putExtra("licenseNumber", values[1]);
+                    startActivity(intent);
                 }
+                 //   Pop popUpWindow = new Pop(1, emptyList[1]);
+                  // startActivity(new Intent(ParkingLotActivity.this, Pop.class));
+
             }
         });
         carButton[2] = (Button) findViewById(R.id.car_3);
 
         carButton[2].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(!emptyList[2])
-                {
-                Pop popUpWindow = new Pop(2, emptyList[2]);
-                startActivity(new Intent(ParkingLotActivity.this, Pop.class) );
+                if(!emptyList[2]) {
+                    Intent intent = new Intent(ParkingLotActivity.this, Pop.class);
+                    intent.putExtra("licenseNumber", values[2]);
+
+                    startActivity(intent);
                 }
+              //  Pop popUpWindow = new Pop(2, emptyList[2]);
+              //  startActivity(new Intent(ParkingLotActivity.this, Pop.class) );
+
             }
         });
         carButton[3] = (Button) findViewById(R.id.car_4);
 
         carButton[3].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (!emptyList[3]) {
-                    Pop popUpWindow = new Pop(3, emptyList[3]);
-                    startActivity(new Intent(ParkingLotActivity.this, Pop.class));
+
+                if(!emptyList[3]) {
+                    Intent intent = new Intent(ParkingLotActivity.this, Pop.class);
+                    intent.putExtra("licenseNumber", values[3]);
+
+                    startActivity(intent);
 
                 }
+                //    Pop popUpWindow = new Pop(3, emptyList[3]);
+                  //  startActivity(new Intent(ParkingLotActivity.this, Pop.class));
+
+
             }
         });
 
@@ -158,10 +179,18 @@ public class ParkingLotActivity extends AppCompatActivity{
         carButton[4].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if (!emptyList[4]) {
-                    Pop popUpWindow = new Pop(4, emptyList[4]);
-                    startActivity(new Intent(ParkingLotActivity.this, Pop.class));
+                if(!emptyList[4])
+
+                {
+                    Intent intent = new Intent(ParkingLotActivity.this, Pop.class);
+
+                    intent.putExtra("licenseNumber", values[4]);
+
+                    startActivity(intent);
                 }
+                //   Pop popUpWindow = new Pop(4, emptyList[4]);
+                 //   startActivity(new Intent(ParkingLotActivity.this, Pop.class));
+
             }
         });
 
@@ -169,9 +198,12 @@ public class ParkingLotActivity extends AppCompatActivity{
 
         carButton[5].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (!emptyList[5]) {
-                    Pop popUpWindow = new Pop(5, emptyList[5]);
-                    startActivity(new Intent(ParkingLotActivity.this, Pop.class));
+
+                if(!emptyList[5]) {
+                    Intent intent = new Intent(ParkingLotActivity.this, Pop.class);
+                    intent.putExtra("licenseNumber", values[5]);
+
+                    startActivity(intent);
                 }
             }
         });

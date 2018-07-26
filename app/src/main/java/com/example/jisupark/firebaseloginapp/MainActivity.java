@@ -92,17 +92,17 @@ public class MainActivity extends AppCompatActivity {
                                     out.write("up".getBytes());
                                     dialog.cancel();
                                 }catch (UnknownHostException e) {
-                                    // TODO Auto-generated catch block  q
+                                    // Auto-generated catch block  q
                                     e.printStackTrace();
                                 } catch (IOException e) {
-                                    // TODO Auto-generated catch block
+                                    // Auto-generated catch block
                                     e.printStackTrace();
                                 }finally{
                                     if(socket != null){
                                         try {
                                             socket.close();
                                         } catch (IOException e) {
-                                            // TODO Auto-generated catch block
+                                            // Auto-generated catch block
                                             e.printStackTrace();
                                         }
                                     }

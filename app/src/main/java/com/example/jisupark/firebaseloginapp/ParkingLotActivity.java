@@ -25,6 +25,7 @@ import static android.graphics.Color.rgb;
 
 public class ParkingLotActivity extends AppCompatActivity{
     Button[] carButton = new Button[6];
+    Boolean[] emptyList = new Boolean[6];
     public static final String TAG = ParkingLotActivity.class.getSimpleName();
 
     void check() {
@@ -46,9 +47,9 @@ public class ParkingLotActivity extends AppCompatActivity{
                     Log.d(TAG, "this is " + i + "th" + value);
                     if (value.equals("0")) {
                         carButton[i].setBackgroundColor(rgb(38, 174, 144));
-
+                        emptyList[i] = true;
                     } else {
-
+                        emptyList[i] = false;
                         carButton[i].setBackgroundColor(rgb(255, 104, 97));
                     }
                     i++;
@@ -91,10 +92,11 @@ public class ParkingLotActivity extends AppCompatActivity{
 
         carButton[0].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-
-                       startActivity(new Intent(ParkingLotActivity.this, Pop.class) );
-
+                if(!emptyList[0]) {
+                    Pop popUpWindow = new Pop(0, emptyList[0]);
+                    startActivity(new Intent(ParkingLotActivity.this, Pop.class));
+                    popUpWindow.display();
+                }
 
             }
         });
@@ -103,26 +105,32 @@ public class ParkingLotActivity extends AppCompatActivity{
         carButton[1].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-
-                startActivity(new Intent(ParkingLotActivity.this, Pop.class) );
-
+                if(!emptyList[1]) {
+                    Pop popUpWindow = new Pop(1, emptyList[1]);
+                    startActivity(new Intent(ParkingLotActivity.this, Pop.class));
+                }
             }
         });
         carButton[2] = (Button) findViewById(R.id.car_3);
 
         carButton[2].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                carButton[2].setBackgroundColor(Color.RED);
-
+                if(!emptyList[2])
+                {
+                Pop popUpWindow = new Pop(2, emptyList[2]);
                 startActivity(new Intent(ParkingLotActivity.this, Pop.class) );
+                }
             }
         });
         carButton[3] = (Button) findViewById(R.id.car_4);
 
         carButton[3].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (!emptyList[3]) {
+                    Pop popUpWindow = new Pop(3, emptyList[3]);
+                    startActivity(new Intent(ParkingLotActivity.this, Pop.class));
 
-                startActivity(new Intent(ParkingLotActivity.this, Pop.class) );
+                }
             }
         });
 
@@ -131,8 +139,10 @@ public class ParkingLotActivity extends AppCompatActivity{
         carButton[4].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-
-                startActivity(new Intent(ParkingLotActivity.this, Pop.class) );
+                if (!emptyList[4]) {
+                    Pop popUpWindow = new Pop(4, emptyList[4]);
+                    startActivity(new Intent(ParkingLotActivity.this, Pop.class));
+                }
             }
         });
 
@@ -140,8 +150,10 @@ public class ParkingLotActivity extends AppCompatActivity{
 
         carButton[5].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                startActivity(new Intent(ParkingLotActivity.this, Pop.class) );
+                if (!emptyList[5]) {
+                    Pop popUpWindow = new Pop(5, emptyList[5]);
+                    startActivity(new Intent(ParkingLotActivity.this, Pop.class));
+                }
             }
         });
     }

@@ -91,7 +91,9 @@ public class ParkingLotActivity extends AppCompatActivity{
 
         carButton[0].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(ParkingLotActivity.this, Pop.class) );
+
+
+                       startActivity(new Intent(ParkingLotActivity.this, Pop.class) );
 
 
             }
@@ -101,8 +103,8 @@ public class ParkingLotActivity extends AppCompatActivity{
         carButton[1].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                carButton[1].setBackgroundColor(rgb(255, 104, 97));
-                Toast.makeText(getApplicationContext(), "this is button 2", Toast.LENGTH_SHORT).show();
+
+                startActivity(new Intent(ParkingLotActivity.this, Pop.class) );
 
             }
         });
@@ -112,7 +114,7 @@ public class ParkingLotActivity extends AppCompatActivity{
             public void onClick(View v) {
                 carButton[2].setBackgroundColor(Color.RED);
 
-                Toast.makeText(getApplicationContext(), "this is button 3", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ParkingLotActivity.this, Pop.class) );
             }
         });
         carButton[3] = (Button) findViewById(R.id.car_4);
@@ -120,8 +122,7 @@ public class ParkingLotActivity extends AppCompatActivity{
         carButton[3].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                carButton[3].setBackgroundColor(rgb(255, 104, 97));
-                Toast.makeText(getApplicationContext(), "this is button 4", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ParkingLotActivity.this, Pop.class) );
             }
         });
 
@@ -131,8 +132,7 @@ public class ParkingLotActivity extends AppCompatActivity{
             public void onClick(View v) {
 
 
-                carButton[4].setBackgroundColor(rgb(255, 104, 97));
-                Toast.makeText(getApplicationContext(), "this is button 5", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ParkingLotActivity.this, Pop.class) );
             }
         });
 
@@ -141,8 +141,7 @@ public class ParkingLotActivity extends AppCompatActivity{
         carButton[5].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                carButton[5].setBackgroundColor(rgb(255, 104, 97));
-                Toast.makeText(getApplicationContext(), "this is button 6", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ParkingLotActivity.this, Pop.class) );
             }
         });
     }

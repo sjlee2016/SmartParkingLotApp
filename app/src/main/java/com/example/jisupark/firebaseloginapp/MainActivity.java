@@ -44,92 +44,87 @@ public class MainActivity extends AppCompatActivity {
     private TextView email;
     private EditText oldEmail,password,newPassword;
     private ProgressBar progressBar;
-    private FirebaseAuth auth;
-    boolean alarm=false;
+    protected FirebaseAuth auth;
     public static final String TAG = MainActivity.class.getSimpleName();
     public DatabaseReference authorizedCar =FirebaseDatabase.getInstance().getReference("AuthorizedCar");
 
-    void checking(){
-        authorizedCar = FirebaseDatabase.getInstance().getReference("AuthorizedCar");
-        authorizedCar.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                int value;
-                value = Integer.parseInt(dataSnapshot.getValue(String.class));
-                if (value==1) {
-                    alarm = true;
+    void checking() {
+            authorizedCar = FirebaseDatabase.getInstance().getReference("AuthorizedCar");
+            authorizedCar.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String value;
+                    value = dataSnapshot.getValue(String.class);
+                    if (value.equals("11")) {
+                        Toast.makeText(MainActivity.this, "alarm on", Toast.LENGTH_SHORT).show();
+                        setAlarm();
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException());
+                }
+            });
     }
 
+    public void setAlarm()
+    {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder builder1 = builder.setTitle("Unauthorized Car Alarm")
+                .setCancelable(false)
+                .setPositiveButton("Open", new DialogInterface.OnClickListener() {
+                    //open 버튼을 누르면 gate가 열리도록 신호를 보내게 하기 위한 코드(이지만 지금은 멈춤.... 문제 있음)
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        Socket socket = null;
+                        try {
+                            socket = new Socket("192.168.20.86", 5522);
+                            //송신
+                            OutputStream out = socket.getOutputStream();
+                            out.write("up".getBytes());
+                            dialog.cancel();
+                        } catch (UnknownHostException e) {
+                            // Auto-generated catch block  q
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            // Auto-generated catch block
+                            e.printStackTrace();
+                        } finally {
+                            if (socket != null) {
+                                try {
+                                    socket.close();
+                                } catch (IOException e) {
+                                    // Auto-generated catch block
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                })
+                .setNegativeButton("Do not open", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        authorizedCar.setValue("00");
+                        dialog.cancel();
+                    }
+                });
+        builder.setMessage("Hello, unauthorized car want to enter the parking lot. Would you open the gate?" +
+                "");
+        AlertDialog diag = builder.create();
+        //Display the message!
+        diag.show();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        while (true) {
-            checking();
-            if(alarm) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Unauthorized Car Alarm")
-                        .setCancelable(false)
-                        .setPositiveButton("Open", new DialogInterface.OnClickListener(){
-                            //open 버튼을 누르면 gate가 열리도록 신호를 보내게 하기 위한 코드(이지만 지금은 멈춤.... 문제 있음)
-                            @Override
-                            public void onClick(DialogInterface dialog, int i) {
-                                Socket socket = null;
-                                try{
-                                    socket = new Socket("192.168.20.86", 5522);
-                                    //송신
-                                    OutputStream out = socket.getOutputStream();
-                                    out.write("up".getBytes());
-                                    dialog.cancel();
-                                }catch (UnknownHostException e) {
-                                    // Auto-generated catch block  q
-                                    e.printStackTrace();
-                                } catch (IOException e) {
-                                    // Auto-generated catch block
-                                    e.printStackTrace();
-                                }finally{
-                                    if(socket != null){
-                                        try {
-                                            socket.close();
-                                        } catch (IOException e) {
-                                            // Auto-generated catch block
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }
-                            }
-                        })
-                        .setNegativeButton("Do not open",new DialogInterface.OnClickListener(){
-                            @Override
-                            public void onClick(DialogInterface dialog, int i)
-                            {
-                                FirebasePost editer = new FirebasePost(0);
-                                authorizedCar.setValue(editer);
-                                dialog.cancel();
-                            }
-                        });
-                builder.setMessage("Hello, unauthorized car want to enter the parking lot. Would you open the gate?" +
-                        "");
-                AlertDialog diag = builder.create();
-                //Display the message!
-                diag.show();
-                break;
-            }else{
-                FirebasePost editer = new FirebasePost(0);
-                authorizedCar.setValue(editer);
-                break;
-            }
-        }
+        boolean first = true;
+        long start_time = 0;
+        long elapsedTime = 0;
+        checking();
 
         //get firebase auth instance
     auth= FirebaseAuth.getInstance();

@@ -15,6 +15,7 @@ import java.util.Map;
 public class FirebasePost {
     public String ID;
     public String name;
+    public int alert;
 
     public FirebasePost(){
         // Default constructor required for calls to DataSnapshot.getValue(FirebasePost.class)
@@ -25,6 +26,10 @@ public class FirebasePost {
         this.name = name;
     }
 
+    public FirebasePost(int alert){
+        this.alert = alert;
+    }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
@@ -32,4 +37,5 @@ public class FirebasePost {
         result.put("name", name);
         return result;
     }
+
 }

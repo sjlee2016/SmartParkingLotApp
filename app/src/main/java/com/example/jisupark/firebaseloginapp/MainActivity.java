@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     boolean alarm=false;
     public static final String TAG = MainActivity.class.getSimpleName();
-    public DatabaseReference authorizedCar;
+    public DatabaseReference authorizedCar =FirebaseDatabase.getInstance().getReference("AuthorizedCar");
 
     void checking(){
         authorizedCar = FirebaseDatabase.getInstance().getReference("AuthorizedCar");
@@ -113,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int i)
                             {
+                                FirebasePost editer = new FirebasePost(0);
+                                authorizedCar.setValue(editer);
                                 dialog.cancel();
                             }
                         });
@@ -123,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 diag.show();
                 break;
             }else{
+                FirebasePost editer = new FirebasePost(0);
+                authorizedCar.setValue(editer);
                 break;
             }
         }

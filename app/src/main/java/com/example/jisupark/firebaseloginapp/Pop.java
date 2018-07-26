@@ -3,14 +3,17 @@ package com.example.jisupark.firebaseloginapp;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.w3c.dom.Text;
+
 class Pop extends Activity {
-    int buttonNum;
-    Boolean empty;
-    Pop()
-    {
-        buttonNum = 0;
-        empty = false;
-    }
+    int buttonNum=0;
+    Boolean empty=false;
+
     Pop(int num, Boolean emp)
     {
         buttonNum = num;
@@ -28,6 +31,15 @@ class Pop extends Activity {
             int width = dm.widthPixels;
             int height = dm.heightPixels;
             getWindow().setLayout((int) (width * .8), (int) (height * .6));
+            //DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("ParkingLot" + "/" + buttonNum + "/license");
+
+           // TextView licenseText = (TextView)  findViewById(R.id.LicenseText);
+           // TextView userNameText = (TextView) findViewById(R.id.userText);
+
+            //licenseText.setText("hello");
+            //mRef = FirebaseDatabase.getInstance().getReference("ParkingLot" + "/" + buttonNum + "/user");
+            //userNameText.setText("hi");
+
         }
 
     }

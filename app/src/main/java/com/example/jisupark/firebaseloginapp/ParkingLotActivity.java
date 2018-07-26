@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.InvalidObjectException;
+
 import static android.graphics.Color.rgb;
 
 /**
@@ -31,27 +33,39 @@ public class ParkingLotActivity extends AppCompatActivity{
     void check() {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("ParkingLot");
+        final DatabaseReference myRef = database.getReference("ParkingLot");
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String value = null;
+                int v = 0;
                 int i = 0;
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                    value = null;
-                    System.out.println(postSnapshot.getKey());
-
                     value = postSnapshot.getValue(String.class);
-                    Log.d(TAG, "this is " + i + "th" + value);
-                    if (value.equals("0")) {
+
+
+                    if(value.equals("00"))
+                    {
+
                         carButton[i].setBackgroundColor(rgb(38, 174, 144));
                         emptyList[i] = true;
-                    } else {
+                    }else
+                    {
+
                         emptyList[i] = false;
                         carButton[i].setBackgroundColor(rgb(255, 104, 97));
                     }
+
+                    /*
+                    if (value==null) {
+                        carButton[i].setBackgroundColor(rgb(38, 174, 144));
+                        emptyList[i] = true;
+                    } else {
+                    }
+                    */
+
                     i++;
                 }
                 // This method is called once with the initial value and again
@@ -78,6 +92,11 @@ public class ParkingLotActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
+                for(int i=0; i<6; i++) {
+                    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("ParkingLot" + "/" + i);
+                    myRef.setValue(0);
+                }*/
         setContentView(R.layout.activity_parking_lot);
 
         check();

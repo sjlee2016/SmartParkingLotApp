@@ -76,15 +76,17 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder1 = builder.setTitle("Unauthorized Car Alarm")
                 .setCancelable(false)
                 .setPositiveButton("Open", new DialogInterface.OnClickListener() {
-                    //open 버튼을 누르면 gate가 열리도록 신호를 보내게 하기 위한 코드(이지만 지금은 멈춤.... 문제 있음)
+                    //open 버튼을 누르면 gate가 열리도록 신호를 보내게 하기 위한 코드
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
+                        authorizedCar.setValue("00");
+                        dialog.cancel();
                         Socket socket = null;
                         try {
-                            socket = new Socket("192.168.20.86", 5522);
+                            socket = new Socket("192.168.20.86", 5520);
                             //송신
                             OutputStream out = socket.getOutputStream();
-                            out.write("up".getBytes());
+                            out.write(1);
                             dialog.cancel();
                         } catch (UnknownHostException e) {
                             // Auto-generated catch block  q

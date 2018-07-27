@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String value;
                     value = dataSnapshot.getValue(String.class);
-                    if (value.equals("11")) {
+                    if (value.equals("alarm")) {
                         Toast.makeText(MainActivity.this, "alarm on", Toast.LENGTH_SHORT).show();
                         setAlarm();
                     }

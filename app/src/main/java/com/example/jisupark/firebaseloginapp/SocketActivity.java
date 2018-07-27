@@ -26,7 +26,7 @@ import java.net.UnknownHostException;
  * Created by JisuPark on 2018-07-24.
  */
 
-public class SocketActivity extends AppCompatActivity {
+public class  SocketActivity extends AppCompatActivity {
     TextView recieveText;
     EditText editTextAddress, editTextPort, messageText;
     Button connectBtn, clearBtn;

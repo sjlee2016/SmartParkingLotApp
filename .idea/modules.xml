@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FirebaseLoginApp-66e69022bed7e7aab5b531f69cde252dafd5181c.iml" filepath="$PROJECT_DIR$/FirebaseLoginApp-66e69022bed7e7aab5b531f69cde252dafd5181c.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smartparkinglotApp.iml" filepath="$PROJECT_DIR$/smartparkinglotApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/smartparkinglotApp.iml" filepath="$PROJECT_DIR$/smartparkinglotApp.iml" />
     </modules>
   </component>

@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.annotation.IdRes;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
@@ -38,7 +39,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -140,9 +143,9 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String value;
                     value = dataSnapshot.getValue(String.class);
-                    if (value.equals("alarm")) {
+                    if (!(value.equals("00"))) {
                         Toast.makeText(MainActivity.this, "alarm on", Toast.LENGTH_SHORT).show();
-                        setAlarm();
+                        setAlarm(value);
                         notificationcall();
                     }
                 }
@@ -155,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             });
     }
 
-    public void setAlarm()
+    public void setAlarm(String plate)
     {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -176,12 +179,73 @@ public class MainActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-        builder.setMessage("Hello, unauthorized car want to enter the parking lot. Would you open the gate?" +
+        builder.setMessage("Hello, unauthorized car("+plate+") want to enter the parking lot. Would you open the gate?" +
                 "");
         AlertDialog diag = builder.create();
         //Display the message!
         diag.show();
     }
+    public class MyClientTask extends AsyncTask<Void, Void, Void> {
+        String dstAddress;
+        int dstPort;
+        String response = "";
+        String myMessage = "";
+
+        //constructor
+        MyClientTask(String addr, int port, String message){
+            dstAddress = addr;
+            dstPort = port;
+            myMessage = message;
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+
+            Socket socket = null;
+            myMessage = myMessage.toString();
+            try {
+                socket = new Socket(dstAddress, dstPort);
+                //송신
+                OutputStream out = socket.getOutputStream();
+                out.write(myMessage.getBytes());
+
+                //수신
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(1024);
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                InputStream inputStream = socket.getInputStream();
+                /*
+                 * notice:
+                 * inputStream.read() will block if no data return
+                 */
+                while ((bytesRead = inputStream.read(buffer)) != -1){
+                    byteArrayOutputStream.write(buffer, 0, bytesRead);
+                    response += byteArrayOutputStream.toString("UTF-8");
+                }
+                response = "서버의 응답: " + response;
+
+            } catch (UnknownHostException e) {
+                // TODO Auto-generated catch block  q
+                e.printStackTrace();
+                response = "UnknownHostException: " + e.toString();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                response = "IOException: " + e.toString();
+            }finally{
+                if(socket != null){
+                    try {
+                        socket.close();
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return null;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -318,7 +382,6 @@ public class MainActivity extends AppCompatActivity {
         btnChangePassword=(Button) findViewById(R.id.change_password_button);
         btnRemoveUser=(Button) findViewById(R.id.remove_user_button);
         changePassword = (Button) findViewById(R.id.changePass);
-        ConnectserverButton=(Button) findViewById(R.id.Connect_server_button);
         ParkingLotButton = (Button) findViewById(R.id.Parking_Lot_Button);
 
         remove=(Button) findViewById(R.id.remove);
@@ -338,14 +401,6 @@ public class MainActivity extends AppCompatActivity {
         if(progressBar!=null){
             progressBar.setVisibility(View.GONE);
         }
-
-        ConnectserverButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent= new Intent(getApplicationContext(), SocketActivity.class);
-                startActivity(intent);
-            }
-        }); // main 화면에서 connect_server_button 누르면 server 화면으로 넘어가게 하기 위한 코드
 
         ParkingLotButton.setOnClickListener(new View.OnClickListener(){
             @Override

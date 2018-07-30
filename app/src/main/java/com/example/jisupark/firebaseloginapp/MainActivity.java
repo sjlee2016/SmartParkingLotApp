@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        check(); // check the parking lot's status
+        checking(); // check the parking lot's status
 
         check();
 

@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String value;
                     value = dataSnapshot.getValue(String.class);
-                    if (value.equals("11")) {
+                    if (value.equals("alarm")) {
                         Toast.makeText(MainActivity.this, "alarm on", Toast.LENGTH_SHORT).show();
                         setAlarm();
                     }
@@ -81,29 +81,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int i) {
                         authorizedCar.setValue("00");
                         dialog.cancel();
-                        Socket socket = null;
-                        try {
-                            socket = new Socket("192.168.20.86", 5520);
-                            //송신
-                            OutputStream out = socket.getOutputStream();
-                            out.write(1);
-                            dialog.cancel();
-                        } catch (UnknownHostException e) {
-                            // Auto-generated catch block  q
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            // Auto-generated catch block
-                            e.printStackTrace();
-                        } finally {
-                            if (socket != null) {
-                                try {
-                                    socket.close();
-                                } catch (IOException e) {
-                                    // Auto-generated catch block
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
                     }
                 })
                 .setNegativeButton("Do not open", new DialogInterface.OnClickListener() {

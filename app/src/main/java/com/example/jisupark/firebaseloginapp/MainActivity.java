@@ -1,8 +1,12 @@
 package com.example.jisupark.firebaseloginapp;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.annotation.IdRes;
 import android.support.annotation.MainThread;
@@ -11,6 +15,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -53,6 +58,20 @@ public class MainActivity extends AppCompatActivity {
     Boolean[] emptyList = new Boolean[6];
     String[] values = new String[6];
 
+    public void notificationcall()
+    {
+        NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setSmallIcon(R.drawable.ic_mr_button_connected_00_light)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_mr_button_connected_00_dark))
+                .setContentTitle("Alert !")
+                .setContentText("Unauthorized vehicle is trying to enter your parking lot");
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(1, notificationBuilder.build());
+
+
+    }
     void check() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("ParkingLot");
@@ -124,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
                     if (value.equals("alarm")) {
                         Toast.makeText(MainActivity.this, "alarm on", Toast.LENGTH_SHORT).show();
                         setAlarm();
+                        notificationcall();
                     }
                 }
 

@@ -21,7 +21,6 @@
         <activity android:name=".AccountActivity.SignupActivity" />
         <activity android:name=".AccountActivity.ResetPasswordActivity" />
         <activity android:name=".SocketActivity" />
-        <activity android:name=".ParkingLotActivity"/>
         <activity android:name=".Pop" android:theme="@style/AppTheme.CustomTheme" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for

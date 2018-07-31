@@ -5,6 +5,7 @@
     android:id="@+id/activity_login2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/Background"
     tools:context="com.example.jisupark.firebaseloginapp.AccountActivity.LoginActivity">
 
     <LinearLayout
@@ -50,7 +51,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
-            android:background="#FF9D33 "
+            android:background="#EFC164 "
             android:text="@string/btn_login"
             android:textColor="@android:color/black" />
 
@@ -74,7 +75,7 @@
             android:background="@null"
             android:text="@string/btn_link_to_register"
             android:textAllCaps="false"
-            android:textColor="#FF9D33"
+            android:textColor="#EFC164"
             android:textSize="15dp"
             tools:ignore="SpUsage" />
 

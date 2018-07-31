@@ -3,6 +3,8 @@ package com.example.jisupark.firebaseloginapp;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -15,6 +17,7 @@ import org.w3c.dom.Text;
 
 class Pop extends Activity {
 
+    private Button CloseButton;
     String btn;
     TextView userNameText;
     protected void onCreate(Bundle savedInstanceState)
@@ -27,6 +30,7 @@ class Pop extends Activity {
             int width = dm.widthPixels;
             int height = dm.heightPixels;
             getWindow().setLayout((int) (width * .8), (int) (height * .6));
+            //CloseButton = (Button) findViewById(R.id.closeButton);
 
         TextView licenseText = (TextView)  findViewById(R.id.LicenseText);
         userNameText = (TextView) findViewById(R.id.userText);
@@ -34,6 +38,13 @@ class Pop extends Activity {
         btn = getIntent().getExtras().getString("licenseNumber");
 
        licenseText.setText("license # : " + btn);
+
+       /* CloseButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void OnClick(View v){
+                finish();
+            }
+        });*/
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("CarLicense_list" + "/" + btn + "/name");

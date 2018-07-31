@@ -50,19 +50,18 @@ import static android.graphics.Color.rgb;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnChangePassword, btnRemoveUser,changePassword, remove,signOut, ConnectserverButton, ParkingLotButton;
+    private Button btnChangePassword, btnRemoveUser, changePassword, remove, signOut;
     private TextView email;
-    private EditText oldEmail,password,newPassword;
+    private EditText oldEmail, password, newPassword;
     private ProgressBar progressBar;
     protected FirebaseAuth auth;
     public static final String TAG = MainActivity.class.getSimpleName();
-    public DatabaseReference authorizedCar =FirebaseDatabase.getInstance().getReference("AuthorizedCar");
+    public DatabaseReference authorizedCar = FirebaseDatabase.getInstance().getReference("AuthorizedCar");
     Button[] carButton = new Button[6];
     Boolean[] emptyList = new Boolean[6];
     String[] values = new String[6];
 
-    public void notificationcall()
-    {
+    public void notificationcall() {
         NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setSmallIcon(R.drawable.ic_mr_button_connected_00_light)
@@ -75,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
     void check() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("ParkingLot");
@@ -91,19 +91,17 @@ public class MainActivity extends AppCompatActivity {
                     value = postSnapshot.getValue(String.class);
 
 
-                    if(value.equals("00"))
-                    {
+                    if (value.equals("00")) {
 
                         carButton[i].setBackgroundColor(rgb(38, 174, 144));
                         emptyList[i] = true;
                         values[i] = value;
 
-                    }else
-                    {
+                    } else {
 
                         emptyList[i] = false;
                         carButton[i].setBackgroundColor(rgb(255, 104, 97));
-                        values[i]=value;
+                        values[i] = value;
                     }
 
                     /*
@@ -137,29 +135,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void checking() {
-            authorizedCar = FirebaseDatabase.getInstance().getReference("AuthorizedCar");
-            authorizedCar.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    String value;
-                    value = dataSnapshot.getValue(String.class);
-                    if (!(value.equals("00"))) {
-                        Toast.makeText(MainActivity.this, "alarm on", Toast.LENGTH_SHORT).show();
-                        setAlarm(value);
-                        notificationcall();
-                    }
+        authorizedCar = FirebaseDatabase.getInstance().getReference("AuthorizedCar");
+        authorizedCar.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value;
+                value = dataSnapshot.getValue(String.class);
+                if (!(value.equals("00"))) {
+                    Toast.makeText(MainActivity.this, "alarm on", Toast.LENGTH_SHORT).show();
+                    setAlarm(value);
+                    notificationcall();
                 }
+            }
 
-                @Override
-                public void onCancelled(DatabaseError error) {
-                    // Failed to read value
-                    Log.w(TAG, "Failed to read value.", error.toException());
-                }
-            });
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
     }
 
-    public void setAlarm(String plate)
-    {
+    public void setAlarm(String plate) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         AlertDialog.Builder builder1 = builder.setTitle("Unauthorized Car Alarm")
@@ -181,12 +178,13 @@ public class MainActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-        builder.setMessage("Hello, unauthorized car("+plate+") want to enter the parking lot. Would you open the gate?" +
+        builder.setMessage("Hello, unauthorized car(" + plate + ") want to enter the parking lot. Would you open the gate?" +
                 "");
         AlertDialog diag = builder.create();
         //Display the message!
         diag.show();
     }
+
     public class MyClientTask extends AsyncTask<Void, Void, Void> {
         String dstAddress;
         int dstPort;
@@ -194,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
         String myMessage = "";
 
         //constructor
-        MyClientTask(String addr, int port, String message){
+        MyClientTask(String addr, int port, String message) {
             dstAddress = addr;
             dstPort = port;
             myMessage = message;
@@ -220,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                  * notice:
                  * inputStream.read() will block if no data return
                  */
-                while ((bytesRead = inputStream.read(buffer)) != -1){
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
                     byteArrayOutputStream.write(buffer, 0, bytesRead);
                     response += byteArrayOutputStream.toString("UTF-8");
                 }
@@ -234,8 +232,8 @@ public class MainActivity extends AppCompatActivity {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
                 response = "IOException: " + e.toString();
-            }finally{
-                if(socket != null){
+            } finally {
+                if (socket != null) {
                     try {
                         socket.close();
                     } catch (IOException e) {
@@ -266,8 +264,7 @@ public class MainActivity extends AppCompatActivity {
 
         carButton[0].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(!emptyList[0])
-                {
+                if (!emptyList[0]) {
                     Intent intent = new Intent(MainActivity.this, Pop.class);
                     intent.putExtra("licenseNumber", values[0]);
 
@@ -280,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
 
         carButton[1].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(!emptyList[1]) {
+                if (!emptyList[1]) {
                     Intent intent = new Intent(MainActivity.this, Pop.class);
                     intent.putExtra("licenseNumber", values[1]);
                     startActivity(intent);
@@ -294,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
 
         carButton[2].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(!emptyList[2]) {
+                if (!emptyList[2]) {
                     Intent intent = new Intent(MainActivity.this, Pop.class);
                     intent.putExtra("licenseNumber", values[2]);
 
@@ -310,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
         carButton[3].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if(!emptyList[3]) {
+                if (!emptyList[3]) {
                     Intent intent = new Intent(MainActivity.this, Pop.class);
                     intent.putExtra("licenseNumber", values[3]);
 
@@ -329,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
         carButton[4].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if(!emptyList[4])
+                if (!emptyList[4])
 
                 {
                     Intent intent = new Intent(MainActivity.this, Pop.class);
@@ -349,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
         carButton[5].setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if(!emptyList[5]) {
+                if (!emptyList[5]) {
                     Intent intent = new Intent(MainActivity.this, Pop.class);
                     intent.putExtra("licenseNumber", values[5]);
 
@@ -361,18 +358,18 @@ public class MainActivity extends AppCompatActivity {
         checking();
 
         //get firebase auth instance
-    auth= FirebaseAuth.getInstance();
-    email=(TextView) findViewById(R.id.useremail);
+        auth = FirebaseAuth.getInstance();
+        email = (TextView) findViewById(R.id.useremail);
 
         //get current user
-        final FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         setDataToView(user);
 
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user=firebaseAuth.getCurrentUser();
-                if(user==null){
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user == null) {
                     // user auth state is changed - user is null
                     // launch login activity
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -381,38 +378,37 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        btnChangePassword=(Button) findViewById(R.id.change_password_button);
-        btnRemoveUser=(Button) findViewById(R.id.remove_user_button);
+        btnChangePassword = (Button) findViewById(R.id.change_password_button);
+        btnRemoveUser = (Button) findViewById(R.id.remove_user_button);
         changePassword = (Button) findViewById(R.id.changePass);
 
-        remove=(Button) findViewById(R.id.remove);
-        signOut=(Button) findViewById(R.id.sign_out);
-        oldEmail=(EditText) findViewById(R.id.old_email);
-        password=(EditText) findViewById(R.id.password);
-        newPassword=(EditText) findViewById(R.id.newPassword);
+        remove = (Button) findViewById(R.id.remove);
+        signOut = (Button) findViewById(R.id.sign_out);
+        oldEmail = (EditText) findViewById(R.id.old_email);
+        password = (EditText) findViewById(R.id.password);
+        newPassword = (EditText) findViewById(R.id.newPassword);
 
         oldEmail.setVisibility(View.GONE);
         password.setVisibility(View.GONE);
         newPassword.setVisibility(View.GONE);
         changePassword.setVisibility(View.GONE);
         remove.setVisibility(View.GONE);
-        progressBar=(ProgressBar) findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         //Button Information_button = (Button) findViewById(R.id.Information_button);
 
-        if(progressBar!=null){
+        if (progressBar != null) {
             progressBar.setVisibility(View.GONE);
         }
 
-
-        btnChangePassword.setOnClickListener(new View.OnClickListener(){
+        btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-             progressBar.setVisibility(View.VISIBLE);
-                if(user != null&& !newPassword.getText().toString().trim().equals("")){
-                    if(newPassword.getText().toString().trim().length()<6){
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                if (user != null && !newPassword.getText().toString().trim().equals("")) {
+                    if (newPassword.getText().toString().trim().length() < 6) {
                         newPassword.setError("Password too short, enter minimum 6 characters");
                         progressBar.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         user.updatePassword(newPassword.getText().toString().trim())
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
@@ -429,30 +425,30 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
                     }
-                }else if(newPassword.getText().toString().trim().equals("")){
+                } else if (newPassword.getText().toString().trim().equals("")) {
                     newPassword.setError("Enter password");
                     progressBar.setVisibility(View.GONE);
                 }
             }
         });
 
-        btnRemoveUser.setOnClickListener(new View.OnClickListener(){
+        btnRemoveUser.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                if(user!=null){
+                if (user != null) {
                     user.delete()
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        Toast.makeText(MainActivity.this,"Your profile is deleted:(Create a account now!",
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(MainActivity.this, "Your profile is deleted:(Create a account now!",
                                                 Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(MainActivity.this, SignupActivity.class));
                                         finish();
                                         progressBar.setVisibility(View.GONE);
-                                    }else{
-                                        Toast.makeText(MainActivity.this,"Failed to delete your account!",Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(MainActivity.this, "Failed to delete your account!", Toast.LENGTH_SHORT).show();
                                         progressBar.setVisibility(View.GONE);
                                     }
                                 }
@@ -460,14 +456,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        signOut.setOnClickListener(new View.OnClickListener(){
+        signOut.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 signOut();
             }
         });
-    }
 
+    }
     @SuppressLint("SetTextI18n")
     private void setDataToView(FirebaseUser user){
         email.setText("User Email:"+user.getEmail());

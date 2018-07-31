@@ -33,8 +33,8 @@ public class FirebasePost {
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("Car License", ID);
-        result.put("name", name);
+        result.put("User Email", ID);
+        result.put("Name", name);
         return result;
     }
 

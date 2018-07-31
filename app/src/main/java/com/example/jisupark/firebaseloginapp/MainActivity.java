@@ -85,10 +85,10 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot)
             {
                 String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-                Log.e("email", email);
+                //Log.e("email", email);
 
                 String carEmail = dataSnapshot.getValue(String.class);
-                Log.e("Caremail", carEmail);
+                //Log.e("Caremail", carEmail);
 
                 if (carEmail.equals(email))
                 {
@@ -293,8 +293,11 @@ public class MainActivity extends AppCompatActivity {
         checking(); // check the parking lot's status
 
         check();
-
-                /*for(int i=0; i<6; i++) {
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("CarLicense_list" + "/TEST/"+ "/Car License");
+        myRef.setValue("sejin@test.com");
+        myRef = FirebaseDatabase.getInstance().getReference("CarLicense_list" + "/TEST/"+ "/name");
+        myRef.setValue("Se Jin");
+        /*for(int i=0; i<6; i++) {
             DatabaseReference myRef = database.getReference("ParkingLot" + "/" + i);
             myRef.setValue("0");
         }

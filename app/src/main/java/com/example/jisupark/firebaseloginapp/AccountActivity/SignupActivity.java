@@ -85,6 +85,7 @@ public class SignupActivity extends AppCompatActivity{
         if (add) {
             FirebasePost post = new FirebasePost(inputEmail.getText().toString().trim(), name);
             postValues = post.toMap();
+            arrayIndex.add(ID);
         }
         childUpdates.put("/CarLicense_list/" + ID, postValues);
         mPostReference.updateChildren(childUpdates);
@@ -159,6 +160,16 @@ public class SignupActivity extends AppCompatActivity{
 
                 if (password.length() < 6) {
                     Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(name)){
+                    Toast.makeText(getApplicationContext(), "Enter your name!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(ID)){
+                    Toast.makeText(getApplicationContext(), "Enter Car License Plate Number!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

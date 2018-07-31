@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#00bfbf</color>
-    <color name="colorPrimaryDark">#555959</color>
+    <color name="colorPrimaryDark">#103636</color>
     <color name="colorAccent">#009e9e</color>
+    <color name="Background">#00434C</color>
 
     <color name="bg_login">#26ae90</color>
     <color name="bg_register">#2e3237</color>
@@ -17,6 +18,6 @@
     <color name="btn_login_bg">#eceef1</color>
     <color name="lbl_name">#333333</color>
     <color name="btn_logout_bg">#ff6861</color>
-    <color name="parkinglot">#26ae90</color>
+    <color name="parkinglot">#16866D</color>
 
 </resources>

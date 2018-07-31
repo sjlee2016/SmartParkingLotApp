@@ -169,6 +169,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
                         authorizedCar.setValue("00");
+                        MyClientTask myClientTask = new MyClientTask("192.168.20.86", 5521, "open");
+                        myClientTask.execute();
                         dialog.cancel();
                     }
                 })
@@ -382,7 +384,6 @@ public class MainActivity extends AppCompatActivity {
         btnChangePassword=(Button) findViewById(R.id.change_password_button);
         btnRemoveUser=(Button) findViewById(R.id.remove_user_button);
         changePassword = (Button) findViewById(R.id.changePass);
-        ParkingLotButton = (Button) findViewById(R.id.Parking_Lot_Button);
 
         remove=(Button) findViewById(R.id.remove);
         signOut=(Button) findViewById(R.id.sign_out);
@@ -402,14 +403,6 @@ public class MainActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
         }
 
-        ParkingLotButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                /*
-                Intent intent= new Intent(getApplicationContext(), ParkingLotActivity.class);
-                startActivity(intent);*/
-            }
-        });
 
         btnChangePassword.setOnClickListener(new View.OnClickListener(){
             @Override

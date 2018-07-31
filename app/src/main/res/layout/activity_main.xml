@@ -5,7 +5,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="#00434C"
+    android:background="@color/Background"
     tools:context="com.example.jisupark.firebaseloginapp.MainActivity">
 
     <EditText
@@ -153,9 +153,19 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="8dp">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="0"
+            android:gravity="center_horizontal"
+            android:text="Parking Lot"
+            android:textColor="@color/yellow"
+            android:textSize="18sp" />
+
         <LinearLayout
             android:layout_width="294dp"
-            android:layout_height="wrap_content"
+            android:layout_height="68dp"
             android:layout_weight="0"
             android:orientation="horizontal"
             tools:layout_editor_absoluteX="8dp"
@@ -165,8 +175,10 @@
                 android:id="@+id/car_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_vertical_margin"
                 android:layout_weight="1"
                 android:background="@color/parkinglot"
+                android:lineSpacingExtra="10sp"
                 android:text="1"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="155dp" />
@@ -176,6 +188,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_weight="1"
                 android:background="@color/parkinglot"
                 android:text="2"
@@ -206,33 +219,35 @@
 
             <Button
                 android:id="@+id/car_4"
-                android:layout_width="match_parent"
+                android:layout_width="317dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+
                 android:layout_weight="1"
                 android:background="#4DB6AC"
-
                 android:text="4"
                 tools:layout_editor_absoluteX="41dp"
                 tools:layout_editor_absoluteY="246dp" />
 
             <Button
                 android:id="@+id/car_5"
-                android:layout_width="match_parent"
+                android:layout_width="318dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_weight="1"
-                android:background="@color/parkinglot"
 
+                android:background="@color/parkinglot"
                 android:text="5"
                 tools:layout_editor_absoluteX="148dp"
                 tools:layout_editor_absoluteY="246dp" />
 
             <Button
                 android:id="@+id/car_6"
-                android:layout_width="match_parent"
+                android:layout_width="311dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/parkinglot"
 
+                android:background="@color/parkinglot"
                 android:text="6"
                 tools:layout_editor_absoluteX="255dp"
                 tools:layout_editor_absoluteY="246dp" />

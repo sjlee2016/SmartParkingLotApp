@@ -75,6 +75,44 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public Boolean result = false;
+    public void isUserCar(String carLicense, final int i ) {
+        result=false;
+        Log.e("ff", carLicense );
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("CarLicense_list" + "/" + carLicense + "/Car License");
+        database.addValueEventListener(new ValueEventListener() {
+
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                Log.e("email", email);
+
+                String carEmail = dataSnapshot.getValue(String.class);
+                Log.e("Caremail", carEmail);
+
+                if (carEmail.equals(email))
+                {
+                    Log.e("Users car" , "it is");
+
+                    carButton[i].setBackgroundColor(rgb(239, 193, 100));
+
+                    result = true;
+                }else
+                {
+                    carButton[i].setBackgroundColor(rgb(255, 104, 97));
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
     void check() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("ParkingLot");
@@ -91,17 +129,19 @@ public class MainActivity extends AppCompatActivity {
                     value = postSnapshot.getValue(String.class);
 
 
-                    if (value.equals("00")) {
+                    if(value.equals("00"))
+                    {
 
                         carButton[i].setBackgroundColor(rgb(38, 174, 144));
                         emptyList[i] = true;
                         values[i] = value;
 
-                    } else {
-
+                    }else
+                    {
+                        isUserCar(value, i);
                         emptyList[i] = false;
-                        carButton[i].setBackgroundColor(rgb(255, 104, 97));
                         values[i] = value;
+
                     }
 
                     /*

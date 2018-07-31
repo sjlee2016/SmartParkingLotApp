@@ -83,7 +83,7 @@ public class SignupActivity extends AppCompatActivity{
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
         if (add) {
-            FirebasePost post = new FirebasePost(ID, name);
+            FirebasePost post = new FirebasePost(inputEmail.getText().toString().trim(), name);
             postValues = post.toMap();
         }
         childUpdates.put("/CarLicense_list/" + ID, postValues);

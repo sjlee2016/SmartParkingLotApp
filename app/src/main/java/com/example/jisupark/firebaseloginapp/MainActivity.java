@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     public void isUserCar(String carLicense, final int i ) {
         result=false;
         Log.e("ff", carLicense );
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference("CarLicense_list" + "/" + carLicense + "/Car License");
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("CarLicense_list" + "/" + carLicense + "/User Email");
         database.addValueEventListener(new ValueEventListener() {
 
             public void onDataChange(DataSnapshot dataSnapshot)
@@ -293,10 +293,6 @@ public class MainActivity extends AppCompatActivity {
         checking(); // check the parking lot's status
 
         check();
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("CarLicense_list" + "/TEST/"+ "/Car License");
-        myRef.setValue("sejin@test.com");
-        myRef = FirebaseDatabase.getInstance().getReference("CarLicense_list" + "/TEST/"+ "/name");
-        myRef.setValue("Se Jin");
         /*for(int i=0; i<6; i++) {
             DatabaseReference myRef = database.getReference("ParkingLot" + "/" + i);
             myRef.setValue("0");

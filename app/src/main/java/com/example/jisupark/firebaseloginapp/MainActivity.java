@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.IdRes;
 import android.support.annotation.MainThread;
@@ -22,14 +23,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.drawable.Drawable;
 
+import com.bumptech.glide.Glide;
 import com.example.jisupark.firebaseloginapp.AccountActivity.LoginActivity;
 import com.example.jisupark.firebaseloginapp.AccountActivity.SignupActivity;
+import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,8 +44,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -64,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
     public void notificationcall() {
         NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setSmallIcon(R.drawable.ic_mr_button_connected_00_light)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_mr_button_connected_00_dark))
+                .setSmallIcon(R.drawable.common_google_signin_btn_icon_light)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.common_google_signin_btn_icon_dark))
                 .setContentTitle("Alert !")
                 .setContentText("Unauthorized vehicle is trying to enter your parking lot");
 
@@ -220,6 +231,14 @@ public class MainActivity extends AppCompatActivity {
                 });
         builder.setMessage("Hello, unauthorized car(" + plate + ") want to enter the parking lot. Would you open the gate?" +
                 "");
+        /*
+        StorageReference mStorageRef;
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        Uri file = Uri.fromFile(new File("gs://smartparking-4ec8d.appspot.com"));
+        StorageReference riversRef = mStorageRef.child("car-photo.jpeg");
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        Glide.with(MainActivity.this).load(riversRef).into(imageView);*/
+
         AlertDialog diag = builder.create();
         //Display the message!
         diag.show();
@@ -298,7 +317,20 @@ public class MainActivity extends AppCompatActivity {
             myRef.setValue("0");
         }
 */
+        /*
+        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Toast.makeText(MainActivity.this,"Image",Toast.LENGTH_SHORT).show();
 
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+*/
         carButton[0] = (Button) findViewById(R.id.car_1);
 
         carButton[0].setOnClickListener(new View.OnClickListener() {

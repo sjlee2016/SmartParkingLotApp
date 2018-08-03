@@ -47,7 +47,7 @@ class Pop extends Activity {
         });*/
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("CarLicense_list" + "/" + btn + "/name");
+        DatabaseReference myRef = database.getReference("CarLicense_list" + "/" + btn + "/Name");
 
         ValueEventListener valueEventListener = myRef.addValueEventListener(new ValueEventListener() {
             @Override

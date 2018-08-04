@@ -20,7 +20,9 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".AccountActivity.SignupActivity" />
         <activity android:name=".AccountActivity.ResetPasswordActivity" />
-        <activity android:name=".Pop" android:theme="@style/AppTheme.CustomTheme" />
+        <activity
+            android:name=".Pop"
+            android:theme="@style/AppTheme.CustomTheme" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -34,6 +36,7 @@
             android:label="@string/title_activity_storage_info"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         -->
+        <activity android:name=".image"></activity>
     </application>
 
 </manifest>

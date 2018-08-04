@@ -28,8 +28,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.drawable.Drawable;
-
-import com.bumptech.glide.Glide;
 import com.example.jisupark.firebaseloginapp.AccountActivity.LoginActivity;
 import com.example.jisupark.firebaseloginapp.AccountActivity.SignupActivity;
 import com.google.android.gms.auth.api.signin.internal.Storage;
@@ -208,7 +206,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setAlarm(String plate) {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         AlertDialog.Builder builder1 = builder.setTitle("Unauthorized Car Alarm")
                 .setCancelable(false)
@@ -222,11 +219,11 @@ public class MainActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 })
-                .setNegativeButton("Do not open", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Show the Car", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int i) {
-                        authorizedCar.setValue("00");
-                        dialog.cancel();
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(MainActivity.this, image.class);
+                        startActivity(intent);
                     }
                 });
         builder.setMessage("Hello, unauthorized car(" + plate + ") want to enter the parking lot. Would you open the gate?" +
@@ -316,20 +313,6 @@ public class MainActivity extends AppCompatActivity {
             DatabaseReference myRef = database.getReference("ParkingLot" + "/" + i);
             myRef.setValue("0");
         }
-*/
-        /*
-        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Toast.makeText(MainActivity.this,"Image",Toast.LENGTH_SHORT).show();
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
 */
         carButton[0] = (Button) findViewById(R.id.car_1);
 

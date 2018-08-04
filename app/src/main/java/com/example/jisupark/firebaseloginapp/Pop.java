@@ -30,7 +30,7 @@ class Pop extends Activity {
             int width = dm.widthPixels;
             int height = dm.heightPixels;
             getWindow().setLayout((int) (width * .8), (int) (height * .6));
-            //CloseButton = (Button) findViewById(R.id.closeButton);
+            CloseButton = (Button) findViewById(R.id.closeButton);
 
         TextView licenseText = (TextView)  findViewById(R.id.LicenseText);
         userNameText = (TextView) findViewById(R.id.userText);
@@ -39,12 +39,12 @@ class Pop extends Activity {
 
        licenseText.setText("license # : " + btn);
 
-       /* CloseButton.setOnClickListener(new View.OnClickListener(){
+       CloseButton.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void OnClick(View v){
+            public void onClick(View v){
                 finish();
             }
-        });*/
+        });
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("CarLicense_list" + "/" + btn + "/Name");

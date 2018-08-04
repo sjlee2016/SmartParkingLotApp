@@ -24,7 +24,7 @@
         android:layout_marginBottom="40dp"
         android:text="User :" />
 
-   <!-- <Button
+    <Button
         android:id="@+id/closeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,6 +32,6 @@
         android:layout_centerHorizontal="true"
         android:background="#286275"
         android:text="Close"
-        android:textColor="@color/yellow"/>-->
+        android:textColor="@color/yellow"/>
 
 </RelativeLayout>

@@ -41,6 +41,7 @@ dependencies {
     //api 'com.google.android.gms:play-services-location:16.0.1'
     api 'junit:junit:4.12'
     api 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.firebaseui:firebase-ui-storage:0.6.0'
 }
 apply plugin: 'com.google.gms.google-services'
 //org.gradle.configureondemand=false

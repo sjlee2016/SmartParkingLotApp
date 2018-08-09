@@ -26,10 +26,6 @@ public class FirebasePost {
         this.name = name;
     }
 
-    public FirebasePost(int alert){
-        this.alert = alert;
-    }
-
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();

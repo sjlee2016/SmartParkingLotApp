@@ -28,6 +28,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.drawable.Drawable;
+
+import com.example.jisupark.firebaseloginapp.AccountActivity.ChangePasswordActivity;
 import com.example.jisupark.firebaseloginapp.AccountActivity.LoginActivity;
 import com.example.jisupark.firebaseloginapp.AccountActivity.SignupActivity;
 import com.google.android.gms.auth.api.signin.internal.Storage;
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     protected FirebaseAuth auth;
     public static final String TAG = MainActivity.class.getSimpleName();
     public DatabaseReference authorizedCar = FirebaseDatabase.getInstance().getReference("AuthorizedCar");
+    public DatabaseReference firstTime = FirebaseDatabase.getInstance().getReference("FirstTime");
     Button[] carButton = new Button[6];
     Boolean[] emptyList = new Boolean[6];
     String[] values = new String[6];
@@ -182,24 +185,53 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    void checking() {
+    public Boolean Check1,Check2= false;
+    public String CarLicense=null;
+    public void checking() {
+        Check1=false;Check2=false;
         authorizedCar = FirebaseDatabase.getInstance().getReference("AuthorizedCar");
         authorizedCar.addValueEventListener(new ValueEventListener() {
+            String value;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String value;
                 value = dataSnapshot.getValue(String.class);
-                if (!(value.equals("00"))) {
-                    Toast.makeText(MainActivity.this, "alarm on", Toast.LENGTH_SHORT).show();
-                    setAlarm(value);
-                    notificationcall();
+                if(!(value.equals("00"))){
+                    Check1=true;
+                    String a =String.valueOf(Check1);
+                    Toast.makeText(MainActivity.this,a,Toast.LENGTH_SHORT).show();
+                    CarLicense=value;
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
+            }
+        });
+        firstTime = FirebaseDatabase.getInstance().getReference("FirstTime");
+        firstTime.addValueEventListener(new ValueEventListener() {
+            String checkOne;
+            int a=0;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                checkOne = dataSnapshot.getValue(String.class);
+                if(!(checkOne.equals("00"))){
+                    a+=1;
+                    if(a==1){
+                        Check2=true;
+                        String b =String.valueOf(Check2);
+                        Toast.makeText(MainActivity.this,b,Toast.LENGTH_SHORT).show();
+                    }
+                }
+                if(Check1==true&&Check2==true){
+                    Toast.makeText(MainActivity.this,"setAlarm",Toast.LENGTH_SHORT).show();
+                    Check1=false;
+                    Check2=false;
+                    a=0;
+                    setAlarm(CarLicense);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
@@ -228,14 +260,6 @@ public class MainActivity extends AppCompatActivity {
                 });
         builder.setMessage("Hello, unauthorized car(" + plate + ") want to enter the parking lot. Would you open the gate?" +
                 "");
-        /*
-        StorageReference mStorageRef;
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-        Uri file = Uri.fromFile(new File("gs://smartparking-4ec8d.appspot.com"));
-        StorageReference riversRef = mStorageRef.child("car-photo.jpeg");
-        ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        Glide.with(MainActivity.this).load(riversRef).into(imageView);*/
-
         AlertDialog diag = builder.create();
         //Display the message!
         diag.show();
@@ -409,8 +433,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        checking();
-
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
         email = (TextView) findViewById(R.id.useremail);
@@ -457,32 +479,7 @@ public class MainActivity extends AppCompatActivity {
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-                if (user != null && !newPassword.getText().toString().trim().equals("")) {
-                    if (newPassword.getText().toString().trim().length() < 6) {
-                        newPassword.setError("Password too short, enter minimum 6 characters");
-                        progressBar.setVisibility(View.GONE);
-                    } else {
-                        user.updatePassword(newPassword.getText().toString().trim())
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(MainActivity.this, "Password is updated, sign in with new password!",
-                                                    Toast.LENGTH_SHORT).show();
-                                            signOut();
-                                            progressBar.setVisibility(View.GONE);
-                                        } else {
-                                            Toast.makeText(MainActivity.this, "Failed to update password!", Toast.LENGTH_SHORT).show();
-                                            progressBar.setVisibility(View.GONE);
-                                        }
-                                    }
-                                });
-                    }
-                } else if (newPassword.getText().toString().trim().equals("")) {
-                    newPassword.setError("Enter password");
-                    progressBar.setVisibility(View.GONE);
-                }
+                startActivity(new Intent(MainActivity.this, ChangePasswordActivity.class));
             }
         });
 

@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
     protected FirebaseAuth auth;
     public static final String TAG = MainActivity.class.getSimpleName();
     public DatabaseReference authorizedCar = FirebaseDatabase.getInstance().getReference("AuthorizedCar");
-    public DatabaseReference firstTime = FirebaseDatabase.getInstance().getReference("FirstTime");
     Button[] carButton = new Button[6];
     Boolean[] emptyList = new Boolean[6];
     String[] values = new String[6];
@@ -185,21 +184,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public Boolean Check1,Check2= false;
-    public String CarLicense=null;
+    public String x="00";
+    public String y="00";
     public void checking() {
-        Check1=false;Check2=false;
+        //Toast.makeText(MainActivity.this,CarLicense,)
         authorizedCar = FirebaseDatabase.getInstance().getReference("AuthorizedCar");
         authorizedCar.addValueEventListener(new ValueEventListener() {
             String value;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 value = dataSnapshot.getValue(String.class);
+                x=value;
                 if(!(value.equals("00"))){
-                    Check1=true;
-                    String a =String.valueOf(Check1);
-                    Toast.makeText(MainActivity.this,a,Toast.LENGTH_SHORT).show();
-                    CarLicense=value;
+                    if(!(x.equals(y))){
+                        setAlarm(value);
+                        y=x;
+                    }
                 }
             }
             @Override
@@ -207,36 +207,7 @@ public class MainActivity extends AppCompatActivity {
                 // Failed to read value
             }
         });
-        firstTime = FirebaseDatabase.getInstance().getReference("FirstTime");
-        firstTime.addValueEventListener(new ValueEventListener() {
-            String checkOne;
-            int a=0;
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                checkOne = dataSnapshot.getValue(String.class);
-                if(!(checkOne.equals("00"))){
-                    a+=1;
-                    if(a==1){
-                        Check2=true;
-                        String b =String.valueOf(Check2);
-                        Toast.makeText(MainActivity.this,b,Toast.LENGTH_SHORT).show();
-                    }
-                }
-                if(Check1==true&&Check2==true){
-                    Toast.makeText(MainActivity.this,"setAlarm",Toast.LENGTH_SHORT).show();
-                    Check1=false;
-                    Check2=false;
-                    a=0;
-                    setAlarm(CarLicense);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
     }
-
     public void setAlarm(String plate) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         AlertDialog.Builder builder1 = builder.setTitle("Unauthorized Car Alarm")
